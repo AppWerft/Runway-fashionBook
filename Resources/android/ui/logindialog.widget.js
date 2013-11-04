@@ -14,7 +14,7 @@ var Dialog = function() {
 			fontSize : '24dp',
 			fontFamily : 'PoetsenOne-Regular'
 		},
-		text : "This app in only for internal use. Please gives us your ident number or scan the QR code."
+		text : "This app in only for internal use. Please give us your ident number or scan the QR code."
 	}));
 	androidView.password = Ti.UI.createTextField({
 		width : Ti.UI.FILL,

@@ -18,8 +18,11 @@ exports.post = function(_args) {
 		xhr.open('GET', _args.image);
 		xhr.send();
 	};
+	
+	/* starting of module */
 	var fb = require('facebook');
 	console.log(fb);
+	return;
 	fb.appid = Ti.App.Properties.getString('ti.facebook.appid');
 	fb.permissions = ['publish_stream'];
 	fb.forceDialogAuth = true;
@@ -28,4 +31,3 @@ exports.post = function(_args) {
 		fb.addEventListener('login', post2wall);
 	}
 };
-
