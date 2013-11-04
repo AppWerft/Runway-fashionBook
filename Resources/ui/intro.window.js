@@ -8,6 +8,7 @@ exports.create = function(_callback) {
 		backgroundImage : '/default.png',
 		exitOnClose : true
 	});
+	
 	var label = Ti.UI.createLabel({
 		top : '50dp',
 		color : 'white',

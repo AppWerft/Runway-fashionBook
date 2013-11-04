@@ -4,6 +4,7 @@ exports.create = function(_key, _value) {
 		navBarHidden : true,
 		backgroundColor : 'black',
 	});
+	
 	self.container = Ti.UI.createView({
 		layout : 'horizontal'
 	});
@@ -23,11 +24,11 @@ exports.create = function(_key, _value) {
 		}
 	});
 	/*label.animate(Ti.UI.createAnimation({
-		transform : Ti.UI.create2DMatrix({
-			scale : 0.2,
-			duration : 700
-		})
-	}));*/
+	 transform : Ti.UI.create2DMatrix({
+	 scale : 0.2,
+	 duration : 700
+	 })
+	 }));*/
 	self.add(label);
 	var cols = [];
 	setTimeout(function() {
@@ -47,7 +48,7 @@ exports.create = function(_key, _value) {
 			key : _key,
 			value : _value
 		});
-		for (var i = 0; i < datas.length && i<80; i++) {
+		for (var i = 0; i < datas.length && i < 80; i++) {
 			cols[i % 3].add(Ti.UI.createImageView({
 				image : datas[i].lowurl,
 				data : datas[i],

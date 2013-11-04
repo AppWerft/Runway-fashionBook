@@ -1,14 +1,13 @@
-exports.create = function(_image, _win) {
+exports.create = function(_args) {
 	function getImage(_callback) {
 		var xhr = Ti.Network.createHTTPClient({
 			onload : function() {
 				_callback(this.responseData.length);
 			}
 		});
-		xhr.open('GET', _image);
+		xhr.open('GET', _args.image);
 		xhr.send();
 	}
-
 	var self = require('vendor/pathmenu').createMenu({
 		buttonImage : '/assets/share.png',
 		radius : 200,
@@ -53,13 +52,11 @@ exports.create = function(_image, _win) {
 				break;
 			case  'facebook' :
 				require('ui/facebook').post({
-					image : _image,
-					onfinish : self.resetMenu
+					image : _args.image
 				});
 				break;
 			case 'star' :
 				var ratingbar = require("titutorial.ratingbar");
-				console.log('ratingbar='+ratingbar);
 				var ratingBar = ratingbar.createRatingBar({
 					top : 50,
 					left : 15,
@@ -68,10 +65,9 @@ exports.create = function(_image, _win) {
 					stepSize : 1.5,
 					isIndicator : false
 				});
-				_win.add(ratingBar);
+				_args.parent.add(ratingBar);
 				break;
 		}
-
 	});
 	self.resetMenu = function() {
 		setTimeout(function() {

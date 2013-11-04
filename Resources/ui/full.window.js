@@ -52,7 +52,10 @@ exports.create = function(_image) {
 					left : '5dp',
 					touchEnabled : false
 				});
-				self.pathmenu = require('ui/pathmenu.widget').create(_image.url, self);
+				self.pathmenu = require('ui/pathmenu.widget').create({
+					image : _image.url,
+					parent : self
+				});
 				self.menucontainer.add(self.pathmenu);
 				self.container.add(self.menucontainer);
 

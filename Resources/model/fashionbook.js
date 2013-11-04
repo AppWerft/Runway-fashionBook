@@ -20,12 +20,10 @@ exports.getImagesByCategory = function(_args) {
 exports.init = function(_args) {
 	if (!Ti.Network.online)
 		alert('Diese App braucht das Internet.');
-	console.log(_args);
 	var xhr = Ti.Network.createHTTPClient({
 		onerror : function() {
 			if (Ti.App.Properties.hasProperty('images'))
 				_args && _args.onload(JSON.parse(Ti.App.Properties.getString('images')));
-			console.log(this.error);
 		},
 		onload : function(e) {
 			var images = shuffle(JSON.parse(this.responseText));

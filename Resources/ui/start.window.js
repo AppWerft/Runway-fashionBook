@@ -8,7 +8,6 @@ exports.create = function() {
 			showPagingControl : (Ti.Android) ? true : false
 		});
 		scrollableView.bottombar = require('ui/bottombar.widget').create();
-
 		setTimeout(function() {
 			self.add(scrollableView);
 			self.locked = false;
@@ -28,7 +27,6 @@ exports.create = function() {
 				scrollableView.bottombar.title.setText(e.view.data.agency);
 				scrollableView.bottombar.data = e.view.data;
 				if (e.view.data.mp4 && Ti.Network.online && Ti.Network.networkType != Ti.Network.NETWORK_MOBILE) {
-					console.log(e.view.data.mp4);
 					scrollableView.camera.mp4 = e.view.data.mp4;
 					scrollableView.camera.show();
 				} else {
