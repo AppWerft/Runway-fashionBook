@@ -6,17 +6,18 @@ exports.post = function(_args) {
 		var xhr = Ti.Network.createHTTPClient({
 			onload : function() {
 				console.log('Info: got image, length: ' + this.responseData);
-				Ti.Android && Ti.UI.createNotificatio({
-					message : 'Start posting to facebook.'
+				Ti.Android && Ti.UI.createNotification({
+					message : 'Start posting to facebook.',
+					duration : Ti.UI.NOTIFICATION_DURATION_SHORT
 				}).show();
 				var data = {
 					message : "TEST MESSAGE",
 					caption : "TEST CAPTION",
 					picture : this.responseData
 				};
-				console.log('Info: try to post this data: ' + data);
+				console.log('Info: try to post this data: ' + JSON.stringify(data));
 				fb.requestWithGraphPath('me/photos', data, 'POST', function(e) {
-					console.log('Info: facebook answer:'+ e);
+					console.log('Info: facebook answer:' + e);
 					_args.onfinish && _args.onfinish();
 				});
 			}
@@ -29,6 +30,7 @@ exports.post = function(_args) {
 	fb.appid = Ti.App.Properties.getString('ti.facebook.appid');
 	fb.permissions = ['publish_stream'];
 	fb.forceDialogAuth = true;
+	console.log('Info: test if facebook object is valide: ' + fb.authorize);
 	if (fb.loggedIn === false) {
 		fb.authorize();
 		fb.addEventListener('login', post2wall);
