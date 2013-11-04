@@ -1,4 +1,4 @@
-exports.create = function(_image) {
+exports.create = function(_image, _win) {
 	function getImage(_callback) {
 		var xhr = Ti.Network.createHTTPClient({
 			onload : function() {
@@ -56,6 +56,19 @@ exports.create = function(_image) {
 					image : _image,
 					onfinish : self.resetMenu
 				});
+				break;
+			case 'star' :
+				var ratingbar = require("titutorial.ratingbar");
+				console.log('ratingbar='+ratingbar);
+				var ratingBar = ratingbar.createRatingBar({
+					top : 50,
+					left : 15,
+					rating : 2,
+					stars : 6,
+					stepSize : 1.5,
+					isIndicator : false
+				});
+				_win.add(ratingBar);
 				break;
 		}
 

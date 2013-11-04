@@ -11,7 +11,7 @@ exports.post = function(_args) {
 				};
 				fb.requestWithGraphPath('me/photos', data, 'POST', function(e) {
 					console.log(e);
-					_args.onfinish  && _args.onfinish();
+					_args.onfinish && _args.onfinish();
 				});
 			}
 		});

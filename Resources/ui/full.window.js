@@ -38,9 +38,13 @@ exports.create = function(_image) {
 			if (pb.value > 0.95) {
 				clearInterval(cron);
 				pb.hide();
-				Ti.Android && Ti.UI.createNotification({
-					message : 'You can zoom and pan by double click or pinch.'
-				}).show();
+				var hints = Ti.App.Properties.getInt('zoomhint', 0);
+				if (hints < 3) {
+					Ti.Android && Ti.UI.createNotification({
+						message : 'You can zoom and pan by double click or pinch.'
+					}).show();
+					Ti.App.Properties.setInt('zoomhint', hints + 1);
+				}
 				self.zoomview.fireEvent('dblclick', {});
 				self.container.remove(darker);
 				self.menucontainer = Ti.UI.createView({
@@ -48,7 +52,7 @@ exports.create = function(_image) {
 					left : '5dp',
 					touchEnabled : false
 				});
-				self.pathmenu = require('ui/pathmenu.widget').create(_image.url);
+				self.pathmenu = require('ui/pathmenu.widget').create(_image.url, self);
 				self.menucontainer.add(self.pathmenu);
 				self.container.add(self.menucontainer);
 

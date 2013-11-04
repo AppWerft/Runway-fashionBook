@@ -73,6 +73,7 @@
     <modules>
         <module platform="android">com.gbaldera.titouchgallery</module>
         <module platform="iphone">path.animator</module>
+        <module platform="android">titutorial.ratingbar</module>
         <module platform="android">facebook</module>
         <module platform="iphone">facebook</module>
     </modules>
