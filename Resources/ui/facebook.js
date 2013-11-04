@@ -2,16 +2,21 @@ exports.post = function(_args) {
 	function post2wall(e) {
 		if (!e.success)
 			return;
-		alert('loggedIn');
+		console.log('Info: user is logged in into facebook, start retrieving image ' + _args.image);
 		var xhr = Ti.Network.createHTTPClient({
 			onload : function() {
+				console.log('Info: got image, length: ' + this.responseData);
+				Ti.Android && Ti.UI.createNotificatio({
+					message : 'Start posting to facebook.'
+				}).show();
 				var data = {
 					message : "TEST MESSAGE",
 					caption : "TEST CAPTION",
 					picture : this.responseData
 				};
+				console.log('Info: try to post this data: ' + data);
 				fb.requestWithGraphPath('me/photos', data, 'POST', function(e) {
-					console.log(e);
+					console.log('Info: facebook answer:'+ e);
 					_args.onfinish && _args.onfinish();
 				});
 			}
@@ -28,5 +33,7 @@ exports.post = function(_args) {
 		fb.authorize();
 		fb.addEventListener('login', post2wall);
 	} else
-		post2wall();
+		post2wall({
+			success : true
+		});
 };
