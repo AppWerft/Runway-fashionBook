@@ -1,7 +1,7 @@
 exports.create = function(_data) {
 	if (_data) {
 		var options = [];
-		var keys = ['season', 'city', 'type', 'artist'];
+		var keys = ['city', 'type', 'artist'];
 		for (var i = 0; i < keys.length; i++)
 			options.push(_data[keys[i]]);
 		var opts = {

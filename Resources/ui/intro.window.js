@@ -5,24 +5,23 @@ exports.create = function(_callback) {
 		fullscreen : true,
 		navBarHidden : true,
 		locked : true,
-		backgroundImage : '/default.png',
+		backgroundColor : 'white',
 		exitOnClose : true
 	});
-	
+
 	var label = Ti.UI.createLabel({
-		top : '50dp',
-		color : 'white',
+		top : '30dp',
+		color : 'black',
 		text : 'fashionBook',
 		font : {
-			fontSize : '50dp',
+			fontSize : '55dp',
 			fontFamily : 'PoetsenOne-Regular'
 		}
 	});
 	var copyright = Ti.UI.createLabel({
-		bottom : '50dp',
-		color : 'white',
+		bottom : '-50dp',
+		color : 'black',
 		textAlign : 'center',
-		opacity : 0,
 		text : 'All rights by\nPHOTOSTUDIO AXEL SIEBMANN',
 		font : {
 			fontSize : '18dp',
@@ -30,50 +29,43 @@ exports.create = function(_callback) {
 		}
 	});
 	copyright.animate({
-		opacity : 1,
-		duration : 5000
+		bottom : 0,
+		duration : 2000
 	});
 	self.add(label);
 	self.girlscontainer = Ti.UI.createView({
-		top : '110dp',
-		backgroundColor : '#333',
-		height : 4 * H
+		top : '100dp',
+		height : Ti.UI.FILL
 	});
-	var girls = [];
-	for (var i = 0; i < 4; i++) {
-		girls[i] = Ti.UI.createImageView({
-			image : '/assets/g' + i + '.jpg',
-			width : W,
-			height : W * 170 / 514,
-			center : {
-				x : (i % 2) ? W * 0.9 : -W * 0.9,
-				y : H * i
-			},
-		});
-		self.girlscontainer.add(girls[i]);
-		girls[i].animate(Ti.UI.createAnimation({
-			duration : 1700 + i * 1500,
-			center : {
-				x : (i % 2) ? -0.5 * W : 0.5 * W,
-				y : 0
-			}
-		}));
-	}
-	self.add(copyright);
+	var img1 = Ti.UI.createImageView({
+		image : '/assets/intro/1.png',
+		width : Ti.UI.FILL,
+		height : Ti.UI.FILL,
+		opacity : 0
+	});
+	self.girlscontainer.add(img1);
+	img1.animate({
+		opacity : 1,
+		duration : 3000
+	});
+
 	self.add(self.girlscontainer);
+	self.add(copyright);
 	self.open();
-	if (Ti.App.Properties.hasProperty('auth'))
-		_callback(self);
-	else {
-		var LoginModule = require('ui/logindialog.widget');
-		self.login = new LoginModule();
-		self.login.show();
-		self.login.addEventListener('success', function() {
+	setTimeout(function() {
+		if (Ti.App.Properties.hasProperty('auth'))
 			_callback(self);
-		});
-		self.login.addEventListener('error', function() {
-			self.close();
-		});
-	}
+		else {
+			var LoginModule = require('ui/logindialog.widget');
+			self.login = new LoginModule();
+			self.login.show();
+			self.login.addEventListener('success', function() {
+				_callback(self);
+			});
+			self.login.addEventListener('error', function() {
+				self.close();
+			});
+		}
+	}, 2000);
 	//	_callback();
 };

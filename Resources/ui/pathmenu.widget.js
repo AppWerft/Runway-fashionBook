@@ -2,19 +2,21 @@ exports.create = function(_args) {
 	function getImage(_callback) {
 		var xhr = Ti.Network.createHTTPClient({
 			onload : function() {
-				_callback(this.responseData.length);
+				_callback(this.responseData);
+			},
+			onerror : function() {
+				console.log(this.error + ' ' + _args.image);
 			}
 		});
 		xhr.open('GET', _args.image);
+		console.log( 'URL: ' + _args.image);
 		xhr.send();
 	}
+
 	var self = require('vendor/pathmenu').createMenu({
 		buttonImage : '/assets/share.png',
 		radius : 200,
 		iconList : [{
-			image : '/assets/save.png',
-			id : 'save'
-		}, {
 			image : '/assets/star.png',
 			id : 'star'
 		}, {
@@ -23,22 +25,26 @@ exports.create = function(_args) {
 		}, {
 			image : '/assets/facebook.png',
 			id : 'facebook'
-		}, {
-			image : '/assets/twitter.png',
-			id : 'twitter'
 		}]
 	});
+	console.log('Info: Path menue created ' + _args);
 	self.initMenu();
 	self.addEventListener('iconClick', function(e) {
 		switch (e.id) {
 			case 'wallpaper' :
 				getImage(function(imageblob) {
-					Ti.UI.createNotification({
-						message : 'Photo set as wallpaper of your ' + Ti.Platform.getModel()
-					}).show();
-					Ti.Media.Android.setSystemWallpaper(imageblob, true);
+					console.log('Blob='+imageblob);
+					/*Ti.UI.createNotification({
+					 message : 'Photo set as wallpaper of your ' + Ti.Platform.getModel()
+					 }).show();*/
+					try {
+						Ti.Media.Android.setSystemWallpaper(imageblob, true);
+					} catch(E) {
+						console.log('Error: cannot set wallpaper ' + E)
+					}
+					self.resetMenu();
 				});
-				self.resetMenu();
+
 				break;
 			case	  'save' :
 				getImage(function(imageblob) {
@@ -51,7 +57,7 @@ exports.create = function(_args) {
 				});
 				break;
 			case  'facebook' :
-				require('ui/facebook').post({
+				require('ui/facebook.widget').post({
 					image : _args.image
 				});
 				break;
@@ -70,6 +76,7 @@ exports.create = function(_args) {
 		}
 	});
 	self.resetMenu = function() {
+
 		setTimeout(function() {
 			self.initMenu();
 		}, 100);

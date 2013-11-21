@@ -28,25 +28,25 @@ exports.create = function() {
 				scrollableView.bottombar.data = e.view.data;
 				if (e.view.data.mp4 && Ti.Network.online && Ti.Network.networkType != Ti.Network.NETWORK_MOBILE) {
 					scrollableView.camera.mp4 = e.view.data.mp4;
-					scrollableView.camera.show();
+				//	scrollableView.camera.show();
 				} else {
 					scrollableView.camera.mp4 = null;
 					scrollableView.camera.hide();
 				}
 				if (e.view.data.wiki && Ti.Network.online && scrollableView.wiki) {
 					scrollableView.wiki.url = e.view.data.wiki;
-					scrollableView.wiki.show();
+				//	scrollableView.wiki.show();
 				} else {
 					scrollableView.wiki.hide();
 				}
-				Ti.Android && Ti.UI.createNotification({
-					message : 'Photos: Kolja von der Lippe',
-					duration : Ti.UI.NOTIFICATION_DURATION_SHORT
-				}).show();
 			}
 		});
 		var viewsinScrollableView = [];
 		require('model/fashionbook').init({
+			onerror : function() {
+				alert('Probleme bei der Datenspiegelung. Bitte App nochmals starten.');
+				self.close();
+			},
 			onload : function(_images) {
 				scrollableView.add(scrollableView.bottombar);
 				var total = _images.length;
