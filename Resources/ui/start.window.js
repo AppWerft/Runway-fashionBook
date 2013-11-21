@@ -17,11 +17,9 @@ exports.create = function() {
 			self.backgroundImage = '';
 			self.backgroundColor = '#333';
 		}, 5000);
-
-		scrollableView.bottombar.addEventListener('click', function(e) {
-			require('ui/dialog.widget').create(e.source.data);
+		scrollableView.addEventListener('click', function(e) {
+			require('ui/dialog.widget').create(e.source.bottombar.data);
 		});
-
 		scrollableView.addEventListener('scrollend', function(e) {
 			if (e.view.data && e.view.data.city) {
 				scrollableView.bottombar.title.setText(e.view.data.agency);
@@ -58,7 +56,7 @@ exports.create = function() {
 						image : _images[i].url,
 						width : Ti.UI.FILL,
 						data : _images[i],
-						height : Ti.UI.FILL
+						height : _images[i].ratio*Ti.Platform.displayCaps.platformWidth
 					}));
 				}
 				scrollableView.bottombar.title.setText(_images[0].city + ' | ' + _images[0].artist);

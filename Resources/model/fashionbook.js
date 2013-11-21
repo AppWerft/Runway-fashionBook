@@ -1,4 +1,4 @@
-const BASEURL = 'http://familientagebuch.de:80/axel';
+const BASEURL = Ti.App.Properties.getString('baseurl');
 //const BASEURL = 'http://milon.no-ip.info:85';
 function shuffle(o) {//v1.0
 	for (var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
@@ -26,7 +26,13 @@ exports.init = function(_args) {
 				_args && _args.onload(JSON.parse(Ti.App.Properties.getString('images')));
 		},
 		onload : function(e) {
-			var images = shuffle(JSON.parse(this.responseText));
+			try {
+				var images = shuffle(JSON.parse(this.responseText));
+			} catch(E) {
+				Ti.App.Properties.removeProperty('images');
+				_args && _args.onerror();
+				return;
+			}
 			var datas = [];
 			for (var i = 0; i < images.length; i++) {
 				var string = images[i].name.replace(/\.jpg/i, '').replace(/_[\d]+$/, '');
@@ -41,10 +47,11 @@ exports.init = function(_args) {
 					season : cats.season[res[1]],
 					type : cats.type[res[2]],
 					city : cats.city[res[3]],
+					ratio : images[i].ratio,
 					artist : a,
 					agency : (cats.artist[a]) ? cats.artist[a].name : a,
-					url : BASEURL + '/photo/high/' + images[i].name,
-					lowurl : BASEURL + '/photo/low/' + images[i].name,
+					url : BASEURL + 'images/high/' + images[i].name,
+					lowurl : BASEURL + 'images/low/' + images[i].name,
 				};
 				if (cats.artist[a] && cats.artist[a].mp4)
 					data.mp4 = cats.artist[a].mp4;

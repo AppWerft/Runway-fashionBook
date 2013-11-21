@@ -10,11 +10,11 @@ exports.create = function(_callback) {
 	});
 
 	var label = Ti.UI.createLabel({
-		top : '30dp',
+		top : '20dp',
 		color : 'black',
 		text : 'fashionBook',
 		font : {
-			fontSize : '55dp',
+			fontSize : '49dp',
 			fontFamily : 'PoetsenOne-Regular'
 		}
 	});
@@ -34,7 +34,7 @@ exports.create = function(_callback) {
 	});
 	self.add(label);
 	self.girlscontainer = Ti.UI.createView({
-		top : '100dp',
+		top : '60dp',
 		height : Ti.UI.FILL
 	});
 	var img1 = Ti.UI.createImageView({

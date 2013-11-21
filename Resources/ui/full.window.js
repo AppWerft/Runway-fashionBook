@@ -6,6 +6,12 @@ exports.create = function(_image) {
 		layout : 'horizontal'
 	});
 	self.container = Ti.UI.createView();
+	/*require('model/fashionbook').getImage({
+		url : _image.url,
+		onload : function(_data) {
+		}
+	});
+*/
 	setTimeout(function() {
 		self.add(self.container);
 		var titouchgallery = require("com.gbaldera.titouchgallery");

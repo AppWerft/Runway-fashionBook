@@ -41,6 +41,7 @@ exports.create = function(_key, _value) {
 			});
 			self.container.add(cols[c]);
 			cols[c].addEventListener('click', function(e) {
+				console.log(e);
 				require('ui/full.window').create(e.source.data).open();
 			});
 		}

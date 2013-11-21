@@ -1,7 +1,8 @@
 exports.create = function() {
 	var self = Ti.UI.createView({
 		bottom : 0,
-		height : '60dp'
+		height : '60dp',
+		touchEnabled : false
 	});
 	self.title = Ti.UI.createLabel({
 		color : 'white',
