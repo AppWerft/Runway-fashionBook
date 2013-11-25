@@ -1,4 +1,4 @@
-exports.cats= {
+exports.cats = {
 	type : {
 		R : 'Runway',
 		D : 'Details',
@@ -11,7 +11,8 @@ exports.cats= {
 		B : 'Barcelona',
 		M : 'Milan',
 		P : 'Paris',
-		L : 'London'
+		L : 'London',
+		B : 'Berlin'
 	},
 	season : {
 		"26" : "Summer 2014",
@@ -60,6 +61,12 @@ exports.cats= {
 		"YSl" : {
 			name : 'YSl Saint Laurent',
 			mp4 : 'http://video.runway-fashion.tv.s3.amazonaws.com/21/PAR/21PAR_YSL/21PAR_YSL_480wm_1500k.mp4?AWSAccessKeyId=0F6XC8NYGBC49V9CVTG2&Expires=1414834251&Signature=1xEIfm9JF4WfX%2BkSlU18bpXjkak%3D'
+		},
+		"HaizhenWang" : {
+			name : 'Haizhen Wang'
+		},
+		"RoksandaIlincic" : {
+			name : 'Roksanda Ilinčić'
 		},
 		"Genny" : {
 			name : 'Genny'
@@ -129,4 +136,4 @@ exports.cats= {
 			mp4 : "http://video.runway-fashion.tv.s3.amazonaws.com/23/NYC/23NYC_vFuerstenberg/23NYC_vFuerstenberg_480wm_1500k.mp4?AWSAccessKeyId=0F6XC8NYGBC49V9CVTG2&Expires=1414835400&Signature=YgOBbF36daP4VUVMimA23jQrRm8%3D"
 		}
 	}
-};
+}; 

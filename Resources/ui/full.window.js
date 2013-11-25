@@ -2,10 +2,10 @@ exports.create = function(_image) {
 	var self = Titanium.UI.createWindow({
 		fullscreen : true,
 		navBarHidden : true,
-		backgroundColor : 'black',
-		layout : 'horizontal'
+		backgroundColor : 'black'
 	});
 	self.container = Ti.UI.createView();
+	
 	/*require('model/fashionbook').getImage({
 		url : _image.url,
 		onload : function(_data) {
@@ -19,9 +19,8 @@ exports.create = function(_image) {
 			images : [_image.url],
 			width : Ti.UI.FILL,
 			height : Ti.UI.FILL
-
 		});
-		self.container.add(self.zoomview);
+		self.container.add(self.zoomview);/*
 		var pb = Ti.UI.createProgressBar({
 			height : '30dp',
 			min : 0,
@@ -73,10 +72,10 @@ exports.create = function(_image) {
 			top : 0,
 			height : '60dp',
 		});
-		//	self.container.add(self.topbar);
+		//	self.container.add(self.topbar);*/
 	}, 10);
 	self.addEventListener('close', function() {
-		self.pathmenu && self.pathmenu.initMenu();
+		//self.pathmenu && self.pathmenu.initMenu();
 	});
 	return self;
 };

@@ -8,7 +8,6 @@ exports.create = function(_callback) {
 		backgroundColor : 'white',
 		exitOnClose : true
 	});
-
 	var label = Ti.UI.createLabel({
 		top : '20dp',
 		color : 'black',
@@ -20,7 +19,8 @@ exports.create = function(_callback) {
 	});
 	var copyright = Ti.UI.createLabel({
 		bottom : '-50dp',
-		color : 'black',
+		color : 'yellow',
+		zIndex : 9999,
 		textAlign : 'center',
 		text : 'All rights by\nPHOTOSTUDIO AXEL SIEBMANN',
 		font : {
@@ -34,7 +34,7 @@ exports.create = function(_callback) {
 	});
 	self.add(label);
 	self.girlscontainer = Ti.UI.createView({
-		top : '60dp',
+		top : '0dp',
 		height : Ti.UI.FILL
 	});
 	var img1 = Ti.UI.createImageView({
@@ -48,12 +48,15 @@ exports.create = function(_callback) {
 		opacity : 1,
 		duration : 3000
 	});
-
 	self.add(self.girlscontainer);
 	self.add(copyright);
 	self.open();
+	copyright.animate({
+		bottom : '-60dp',
+		duration : 3000
+	});
 	setTimeout(function() {
-		if (Ti.App.Properties.hasProperty('auth'))
+		if (Ti.App.Properties.hasProperty('auth') || true)
 			_callback(self);
 		else {
 			var LoginModule = require('ui/logindialog.widget');

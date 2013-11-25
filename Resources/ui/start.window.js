@@ -4,7 +4,7 @@ exports.create = function() {
 		var scrollableView = Ti.UI.createScrollableView({
 			width : Ti.UI.FILL,
 			height : Ti.UI.FILL,
-			cacheSize : 11,
+			cacheSize : 3, // only for iOS
 			showPagingControl : (Ti.Android) ? true : false
 		});
 		scrollableView.bottombar = require('ui/bottombar.widget').create();
@@ -17,27 +17,18 @@ exports.create = function() {
 			self.backgroundImage = '';
 			self.backgroundColor = '#333';
 		}, 5000);
-		scrollableView.addEventListener('click', function(e) {
-			require('ui/dialog.widget').create(e.source.bottombar.data);
+		scrollableView.bottombar.addEventListener('click', function(e) {
+			console.log('Info: click received ' + scrollableView.bottombar.data);
+			require('ui/dialog.widget').create(scrollableView.bottombar.data);
 		});
 		scrollableView.addEventListener('scrollend', function(e) {
-			if (e.view.data && e.view.data.city) {
+			console.log('Info: scrollend ==========');
+			console.log(e.view.data);
+			if (e.view.data) {
 				scrollableView.bottombar.title.setText(e.view.data.agency);
 				scrollableView.bottombar.data = e.view.data;
-				if (e.view.data.mp4 && Ti.Network.online && Ti.Network.networkType != Ti.Network.NETWORK_MOBILE) {
-					scrollableView.camera.mp4 = e.view.data.mp4;
-				//	scrollableView.camera.show();
-				} else {
-					scrollableView.camera.mp4 = null;
-					scrollableView.camera.hide();
-				}
-				if (e.view.data.wiki && Ti.Network.online && scrollableView.wiki) {
-					scrollableView.wiki.url = e.view.data.wiki;
-				//	scrollableView.wiki.show();
-				} else {
-					scrollableView.wiki.hide();
-				}
-			}
+			} else
+				console.log('Warning: missing properties in ' + e.view.data);
 		});
 		var viewsinScrollableView = [];
 		require('model/fashionbook').init({
@@ -52,12 +43,7 @@ exports.create = function() {
 					message : total + ' fashion pictures received'
 				}).show();
 				for (var i = 0; i < total; i++) {
-					viewsinScrollableView.push(Ti.UI.createImageView({
-						image : _images[i].url,
-						width : Ti.UI.FILL,
-						data : _images[i],
-						height : _images[i].ratio*Ti.Platform.displayCaps.platformWidth
-					}));
+					viewsinScrollableView.push(require('ui/singleview.widget').create(_images[i]));
 				}
 				scrollableView.bottombar.title.setText(_images[0].city + ' | ' + _images[0].artist);
 				scrollableView.setViews(viewsinScrollableView);
@@ -75,7 +61,6 @@ exports.create = function() {
 						mp4 : e.source.mp4
 					});
 				});
-
 				scrollableView.wiki = Ti.UI.createButton({
 					top : '5dp',
 					left : '5dp',

@@ -2,13 +2,13 @@ exports.create = function() {
 	var self = Ti.UI.createView({
 		bottom : 0,
 		height : '60dp',
-		touchEnabled : false
+		bubbleParent : false
 	});
 	self.title = Ti.UI.createLabel({
 		color : 'white',
 		textAlign : 'center',
 		text : '',
-		touchEnabled : false,
+		bubbleParent : true,
 		font : {
 			fontSize : '26dp',
 			fontFamily : 'PoetsenOne-Regular'
@@ -17,7 +17,7 @@ exports.create = function() {
 	self.add(Ti.UI.createView({
 		backgroundColor : 'black',
 		touchEnabled : false,
-		opacity : 0.7
+		opacity : 0.5
 	}));
 	self.add(Ti.UI.createImageView({
 		image : '/m.png',

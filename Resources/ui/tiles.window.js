@@ -3,6 +3,7 @@ exports.create = function(_key, _value) {
 		fullscreen : true,
 		navBarHidden : true,
 		backgroundColor : 'black',
+		orientationModes:[Titanium.UI.PORTRAIT]
 	});
 	
 	self.container = Ti.UI.createView({
