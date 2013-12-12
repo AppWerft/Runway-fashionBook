@@ -1,4 +1,5 @@
 (function() {
 	console.log('=========================');
-	require('ui/start.window').create();
+	Ti.App.TouchGallery = require("com.gbaldera.titouchgallery");
+	require('ui/startgallery.window').create();
 })();
