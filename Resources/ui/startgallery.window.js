@@ -13,22 +13,28 @@ exports.create = function() {
 				}
 				var scrollableView = Ti.App.TouchGallery.createTouchGallery({
 					images : imagesinScrollableView,
-					width : Ti.UI.FILL,
-					height : Ti.UI.FILL
+					bottom : '40dp'
 				});
 				parent_window.add(scrollableView);
-//				scrollableView.bottombar = require('ui/bottombar.widget').create();
+				bottombar = require('ui/bottombar.widget').create();
+				parent_window.add(bottombar);
+				bottombar.fireEvent('setText', {
+					text : _allImages[0].agency
+				});
 				parent_window.backgroundImage = '';
 				parent_window.backgroundColor = '#111';
 				setTimeout(function() {
 					parent_window.locked = false;
-				}, 5000);
-//				scrollableView.add(scrollableView.bottombar);
-				scrollableView.addEventListener('singletap', function(_e) {
-					var image = _images[_e.currentView];
-					require('ui/dialog.widget').create(image);
+				}, 200);
+				scrollableView.addEventListener('scroll', function(_e) {
+					bottombar.fireEvent('setText', {
+						text : _allImages[_e.currentPage].agency
+					});
 				});
-
+				scrollableView.addEventListener('singletap', function(_e) {
+					// bug in docu!  ulr is index
+					require('ui/dialog.widget').create(_allImages[_e.url]);
+				});
 				Ti.Android && Ti.UI.createNotification({
 					message : total + ' fashion pictures received'
 				}).show();
@@ -49,6 +55,7 @@ exports.create = function() {
 					return false;
 				} else {
 					parent_window.close();
+					Ti.Android.currentActivity.finsh();
 					return true;
 				}
 			});

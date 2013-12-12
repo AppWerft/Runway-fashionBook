@@ -16,7 +16,7 @@ exports.create = function(_image) {
 		self.add(self.container);
 		var titouchgallery = require("com.gbaldera.titouchgallery");
 		self.zoomview = titouchgallery.createTouchGallery({
-			images : [_image.url,_image.url,_image.url,_image.url,_image.url],
+			images : [_image.url],
 			width : Ti.UI.FILL,
 			height : Ti.UI.FILL
 		});

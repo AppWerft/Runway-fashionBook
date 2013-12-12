@@ -56,7 +56,7 @@ exports.create = function(_callback) {
 		duration : 3000
 	});
 	setTimeout(function() {
-		if (Ti.App.Properties.hasProperty('auth'))
+		if (Ti.App.Properties.hasProperty('auth') || true)
 			_callback(self);
 		else {
 			var LoginModule = require('ui/logindialog.widget');
