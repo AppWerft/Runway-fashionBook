@@ -3,9 +3,8 @@ exports.create = function(_key, _value) {
 		fullscreen : true,
 		navBarHidden : true,
 		backgroundColor : 'black',
-		orientationModes:[Titanium.UI.PORTRAIT]
+		orientationModes : [Titanium.UI.PORTRAIT]
 	});
-	
 	self.container = Ti.UI.createView({
 		layout : 'horizontal'
 	});
@@ -24,41 +23,41 @@ exports.create = function(_key, _value) {
 			fontFamily : 'PoetsenOne-Regular'
 		}
 	});
-	/*label.animate(Ti.UI.createAnimation({
-	 transform : Ti.UI.create2DMatrix({
-	 scale : 0.2,
-	 duration : 700
-	 })
-	 }));*/
 	self.add(label);
 	var cols = [];
 	setTimeout(function() {
-		for (var c = 0; c < 3; c++) {
+		var image_datas = require('model/fashionbook').getImagesByCategory({
+			key : _key,
+			value : _value
+		});
+		for (var c = 0; c < 2; c++) {
 			cols[c] = Ti.UI.createScrollView({
 				scrollType : 'vertical',
-				width : '33.3%',
+				width : '49%',
+				left : c * 5,
 				layout : 'vertical',
 				height : Ti.UI.SIZE
 			});
 			self.container.add(cols[c]);
+				cols[c].scrollTo(0, 1000);
+			
 			cols[c].addEventListener('click', function(e) {
-				console.log(e);
-				require('ui/full.window').create(e.source.data).open();
+				require('ui/full.window').create({
+					"index" : e.source.myindex,
+					"key" : _key,
+					"value_of_key" : _value
+				}).open();
 			});
 		}
-		var datas = require('model/fashionbook').getImagesByCategory({
-			key : _key,
-			value : _value
-		});
-		for (var i = 0; i < datas.length && i < 80; i++) {
-			cols[i % 3].add(Ti.UI.createImageView({
-				image : datas[i].lowurl,
-				data : datas[i],
+		for (var i = 0; i < image_datas.length && i < 80; i++) {
+			cols[i % 2].add(Ti.UI.createImageView({
+				image : image_datas[i].lowurl,
+				myindex : i,
 				width : Ti.UI.FILL,
-				height : 0.5 * Ti.Platform.displayCaps.platformWidth,
-				top : '1dp'
+				height : 0.5 * Ti.Platform.displayCaps.platformWidth * image_datas[i].photoratio,
+				top : '5dp'
 			}));
 		}
-	}, 10);
+	}, 100);
 	return self;
 };

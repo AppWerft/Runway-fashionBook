@@ -1,5 +1,11 @@
 exports.create = function() {
 	require('ui/intro.window').create(function(parent_window) {
+		var frame = Ti.UI.createView({
+			backgroundColor : 'black'
+		});
+		parent_window.add(frame);
+		
+
 		require('model/fashionbook').init({
 			onerror : function() {
 				alert('Probleme bei der Datenspiegelung. Bitte App nochmals starten.');
@@ -13,16 +19,13 @@ exports.create = function() {
 				}
 				var scrollableView = Ti.App.TouchGallery.createTouchGallery({
 					images : imagesinScrollableView,
-					bottom : '40dp'
 				});
-				parent_window.add(scrollableView);
+				frame.add(scrollableView);
 				bottombar = require('ui/bottombar.widget').create();
-				parent_window.add(bottombar);
+				frame.add(bottombar);
 				bottombar.fireEvent('setText', {
 					text : _allImages[0].agency
 				});
-				parent_window.backgroundImage = '';
-				parent_window.backgroundColor = '#111';
 				setTimeout(function() {
 					parent_window.locked = false;
 				}, 200);
@@ -30,11 +33,18 @@ exports.create = function() {
 					bottombar.fireEvent('setText', {
 						text : _allImages[_e.currentPage].agency
 					});
+					var modus = (_allImages[_e.currentPage].photoratio > 1) ? Ti.UI.PORTRAIT : Ti.UI.LANDSCAPE;
+					parent_window.setOrientationModes([modus]);
 				});
 				scrollableView.addEventListener('singletap', function(_e) {
 					// bug in docu!  ulr is index
 					require('ui/dialog.widget').create(_allImages[_e.url]);
 				});
+				parent_window.activity.onPrepareOptionsMenu  = function() {
+					require('ui/dialog.widget').create(_allImages[scrollableView.currentPage]);
+		
+			
+		};
 				Ti.Android && Ti.UI.createNotification({
 					message : total + ' fashion pictures received'
 				}).show();
@@ -55,7 +65,7 @@ exports.create = function() {
 					return false;
 				} else {
 					parent_window.close();
-					Ti.Android.currentActivity.finsh();
+					Ti.Android.currentActivity.finish();
 					return true;
 				}
 			});

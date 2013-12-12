@@ -17,7 +17,7 @@ exports.create = function() {
 	self.add(Ti.UI.createView({
 		backgroundColor : 'black',
 		touchEnabled : false,
-		opacity : 0.88
+		opacity : 0.58
 	}));
 	self.add(self.title);
 	self.addEventListener('setText',function(_e){

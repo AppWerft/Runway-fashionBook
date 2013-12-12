@@ -34,6 +34,16 @@ exports.cats = {
 			wiki : "http://en.wikipedia.org/wiki/Dries_van_Noten",
 			mp4 : 'http://video.runway-fashion.tv.s3.amazonaws.com/24/PAR/24PAR_VanNoten/24PAR_VanNoten_480wm_1500k.mp4?AWSAccessKeyId=0F6XC8NYGBC49V9CVTG2&Expires=1414833271&Signature=NkGxQzLrIJiwabuAkM%2BCg9SDGPI%3D'
 		},
+		"PPQ" : {
+			name : "PPQ London"
+		},
+		"TomFord" : {
+			name : "Tom Ford Fashion"
+		},
+		"LWren" : {
+			name : "L'Wren Scott"
+		},
+
 		"AgnesB" : {
 			name : 'agnès b.',
 			wiki : "http://en.wikipedia.org/wiki/Agnes_B",
@@ -136,4 +146,4 @@ exports.cats = {
 			mp4 : "http://video.runway-fashion.tv.s3.amazonaws.com/23/NYC/23NYC_vFuerstenberg/23NYC_vFuerstenberg_480wm_1500k.mp4?AWSAccessKeyId=0F6XC8NYGBC49V9CVTG2&Expires=1414835400&Signature=YgOBbF36daP4VUVMimA23jQrRm8%3D"
 		}
 	}
-}; 
+};

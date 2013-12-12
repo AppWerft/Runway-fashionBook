@@ -14,7 +14,8 @@ exports.create = function(_data) {
 		});
 		self.show();
 		self.addEventListener('click', function(e) {
-			require('ui/tiles.window').create(keys[e.index], options[e.index]).open();
+			if (e.index >= 0)
+				require('ui/tiles.window').create(keys[e.index], options[e.index]).open();
 		});
 	}
 };
