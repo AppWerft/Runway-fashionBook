@@ -25,32 +25,38 @@ exports.create = function(_key, _value) {
 	});
 	self.add(label);
 	var cols = [];
-	setTimeout(function() {
-		var image_datas = require('model/fashionbook').getImagesByCategory({
+	var image_datas = require('model/fashionbook').getImagesByCategory({
+		key : _key,
+		value : _value
+	});
+	var images = [[], []];
+	for (var i = 0, len = image_datas.length; i < len; i++) {
+		// save the index for linking to next view
+		image_datas[i].ndx = i;
+		images[i % 2].push(image_datas[i]);
+	}
+	// Preparing of both cols:
+	for (var c = 0; c < 2; c++) {
+		cols[c] = Ti.UI.createView({
+			width : '49%',
+			left : c * 5,
+			height : Ti.UI.SIZE
+		});
+		// both cols put into window:
+		self.container.add(cols[c]);
+		var listview = require('ui/gallerylistview.widget').create({
+			images : images[c],
 			key : _key,
 			value : _value
 		});
-		var images = [[], []];
-		for (var i = 0, len = image_datas.length; i < len; i++) {
-			images[i % 2].push(image_datas[i]);
-		}
-		for (var c = 0; c < 2; c++) {
-			cols[c] = Ti.UI.createView({
-				width : '49%',
-				left : c * 5,
-				height : Ti.UI.SIZE
-			});
-			self.container.add(cols[c]);
-			require('./gallerylistview.widget').create(images[c]);
-			cols[c].addEventListener('click', function(e) {
-				require('ui/full.window').create({
-					"index" : e.source.myindex,
-					"key" : _key,
-					"value_of_key" : _value
-				}).open();
-			});
-		}
-
-	}, 100);
+		cols[c].add(listview);
+		/*cols[c].addEventListener('click', function(e) {
+			require('ui/full.window').create({
+				"index" : e.source.myindex,
+				"key" : _key,
+				"value_of_key" : _value
+			}).open();
+		});*/
+	}
 	return self;
 };
