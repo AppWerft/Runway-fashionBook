@@ -15,7 +15,7 @@ exports.create = function(_data) {
 		self.show();
 		self.addEventListener('click', function(e) {
 			if (e.index >= 0)
-				require('ui/tiles.window').create(keys[e.index], options[e.index]).open();
+				require('ui/w2.window').create(keys[e.index], options[e.index]).open();
 		});
 	}
 };
