@@ -40,7 +40,7 @@ exports.create = function(_args) {
 					try {
 						Ti.Media.Android.setSystemWallpaper(imageblob, true);
 					} catch(E) {
-						console.log('Error: cannot set wallpaper ' + E)
+						console.log('Error: cannot set wallpaper ' + E);
 					}
 					self.resetMenu();
 				});

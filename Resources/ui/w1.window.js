@@ -4,7 +4,7 @@ exports.create = function() {
 			backgroundColor : 'black'
 		});
 		parent_window.add(frame);
-			require('model/fashionbook').init({
+		require('model/fashionbook').init({
 			onerror : function() {
 				alert('Probleme bei der Datenspiegelung. Bitte App nochmals starten.');
 				parent_window.close();
@@ -38,17 +38,16 @@ exports.create = function() {
 					// bug in docu!  ulr is index
 					require('ui/dialog.widget').create(_allImages[_e.url]);
 				});
-				parent_window.activity.onPrepareOptionsMenu  = function() {
+				parent_window.activity.onPrepareOptionsMenu = function() {
 					require('ui/dialog.widget').create(_allImages[touchgallery.currentPage]);
-		
-			
-		};
+
+				};
 				Ti.Android && Ti.UI.createNotification({
 					message : total + ' fashion pictures received'
 				}).show();
 			}
 		});
-/* Terminating of App after BackButton clicking */
+		/* Terminating of App after BackButton clicking */
 		parent_window.addEventListener('androidback', function() {
 			if (parent_window.locked == true)
 				return false;
@@ -64,6 +63,7 @@ exports.create = function() {
 				} else {
 					parent_window.close();
 					Ti.Android.currentActivity.finish();
+					require('bencoding.android.tools').createPlatform().exitApp();
 					return true;
 				}
 			});
