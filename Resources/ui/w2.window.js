@@ -1,4 +1,5 @@
 exports.create = function(_key, _value) {
+	var TiTouchGallery = require('ui/gallerylistview.widget');
 	var self = Titanium.UI.createWindow({
 		fullscreen : true,
 		navBarHidden : true,
@@ -44,19 +45,11 @@ exports.create = function(_key, _value) {
 		});
 		// both cols put into window:
 		self.container.add(cols[c]);
-		var listview = require('ui/gallerylistview.widget').create({
+		cols[c].add(TiTouchGallery.create({
 			images : images[c],
 			key : _key,
 			value : _value
-		});
-		cols[c].add(listview);
-		/*cols[c].addEventListener('click', function(e) {
-			require('ui/full.window').create({
-				"index" : e.source.myindex,
-				"key" : _key,
-				"value_of_key" : _value
-			}).open();
-		});*/
+		}));
 	}
 	return self;
 };

@@ -1,15 +1,17 @@
 exports.create = function(_args) {
-	var image_items = _args.images;
 	var listviewitems = [];
-	for (var i = 0, len = image_items.length; i < len; i++) {
+	var screen_width = Ti.Platform.displayCaps.platformWidth;
+	var max = (screen_width >800) ? null : 7;
+	for (var i = 0, len = _args.images.length; i < len; i++) {
+		if (max && i>max) break;
 		listviewitems.push({
 			template : 'gallery',
 			photo : {
-				image : image_items[i].url
+				image : (screen_width > 800) ? _args.images[i].url : _args.images[i].lowurl
 			},
 			properties : {
 				allowsSelection : false,
-				itemId : image_items[i].ndx,
+				itemId : _args.images[i].ndx,
 				accessoryType : Ti.UI.LIST_ACCESSORY_TYPE_NONE
 			}
 		});
@@ -36,11 +38,14 @@ exports.create = function(_args) {
 			items : listviewitems
 		})]
 	});
+	console.log('Info: ' + (Ti.Platform.availableMemory / 1000).toFixed(1) + ' kBytes <--------');
+
 	widget.addEventListener('itemclick', function(_e) {
 		var ndx = _e.itemId;
 		require('ui/w3.window').create({
 			"index" : ndx,
 			"key" : _args.key,
+			"max" : max,
 			"value_of_key" : _args.value
 		}).open();
 

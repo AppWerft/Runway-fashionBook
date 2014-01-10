@@ -2,12 +2,12 @@ const W = Ti.Platform.displayCaps.platformWidth;
 H = W * 0.9 * 170 / 514;
 exports.create = function(_callback) {
 	var self = Ti.UI.createWindow({
-		fullscreen : true,
-		navBarHidden : true,
-		locked : true,
-		backgroundColor : 'white',
-		exitOnClose : true
-	});
+			fullscreen : true,
+			navBarHidden : true,
+			locked : true,
+			backgroundColor : 'white',
+			exitOnClose : true
+		});
 	var label = Ti.UI.createLabel({
 		top : '20dp',
 		color : 'black',

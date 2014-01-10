@@ -31,7 +31,8 @@
         </orientations>
     </iphone>
     <android xmlns:android="http://schemas.android.com/apk/res/android">
-        <manifest android:versionCode="21" android:versionName="1.21"
+       <!-- <uses-sdk android:minSdkVersion="10" android:targetSdkVersion="19"/>-->
+        <manifest android:versionCode="22" android:versionName="1.22"
             package="de.appwerft.fashionbook" xmlns:android="http://schemas.android.com/apk/res/android">
             <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
             <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
@@ -76,7 +77,6 @@
         <module platform="android">facebook</module>
         <module platform="iphone">facebook</module>
         <module platform="android">com.gbaldera.titouchgallery</module>
-        <module platform="android">com.alcoapps.actionbarextras</module>
     </modules>
     <deployment-targets>
         <target device="android">true</target>
