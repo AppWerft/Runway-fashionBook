@@ -48,7 +48,7 @@ exports.create = function() {
 				}).show();
 			}
 		});
-
+/* Terminating of App after BackButton clicking */
 		parent_window.addEventListener('androidback', function() {
 			if (parent_window.locked == true)
 				return false;
