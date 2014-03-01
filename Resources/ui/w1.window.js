@@ -74,7 +74,7 @@ exports.create = function() {
 						message : 'FashionBook finished'
 					}).show();
 					self.close();
-					setTimeout(function() {
+					setTimeout(function() {     
 						Ti.Android.currentActivity.finish();
 						require('bencoding.android.tools').createPlatform().exitApp();
 					}, 1000);
