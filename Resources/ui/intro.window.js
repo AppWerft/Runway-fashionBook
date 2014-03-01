@@ -2,12 +2,48 @@ const W = Ti.Platform.displayCaps.platformWidth;
 H = W * 0.9 * 170 / 514;
 exports.create = function(_callback) {
 	var self = Ti.UI.createWindow({
-			fullscreen : true,
-			navBarHidden : true,
-			locked : true,
-			backgroundColor : 'white',
-			exitOnClose : true
+		fullscreen : true,
+		locked : true,
+		backgroundColor : 'white',
+		exitOnClose : true
+	});
+	if (Ti.Android) {
+		self.addEventListener('open', function() {
+			console.log('Info: start menu');
+			var activity = self.getActivity();
+			var actionBar = activity.actionBar;
+			console.log(actionBar);
+			if (actionBar) {
+				activity.onCreateOptionsMenu = function(e) {
+					console.log('Start menu');
+					e.menu.add({
+						title : "Sharing",
+						icon : '/assets/share.png',
+						showAsAction : Ti.Android.SHOW_AS_ACTION_ALWAYS,
+						itemId : 0
+					}).addEventListener("click", function() {
+						var intent = Ti.Android.createIntent({
+							action : Ti.Android.ACTION_SEND,
+							type : "text/plain"
+						});
+						intent.putExtra(Ti.Android.EXTRA_TEXT, 'Some text that we want to share');
+						intent.addCategory(Ti.Android.CATEGORY_DEFAULT);
+						Ti.Android.currentActivity.startActivity(intent);
+					});
+					e.menu.add({
+						title : "Favorize",
+						icon : '/assets/star.png',
+						showAsAction : Ti.Android.SHOW_AS_ACTION_ALWAYS,
+						itemId : 1
+					}).addEventListener("click", function() {
+						Ti.UI.createNotification({
+							message : 'This model faved'
+						}).show();
+					});
+				};
+			}
 		});
+	}
 	var label = Ti.UI.createLabel({
 		top : '20dp',
 		color : 'black',
@@ -17,6 +53,8 @@ exports.create = function(_callback) {
 			fontFamily : 'PoetsenOne-Regular'
 		}
 	});
+	var intro = Ti.UI.createLabel({text:'An alle Fashion Groupies!! dieses „App“ ist für all diejenigen, die gierig sind auf neue Trends, die Anregung suchen, um einen eigenen, individuellen Stil für sich zu kreieren.\n\nEr ist als „Schlüsselloch“ gedacht, um die jungen Modehungrigen an der Welt der großen Kreation teilnehmen zu lassen, und sie zu mutigen und  gewagten Eigenkompositionen zu inspirieren.
+'});
 	var copyright = Ti.UI.createLabel({
 		bottom : '-50dp',
 		color : 'yellow',
@@ -32,7 +70,7 @@ exports.create = function(_callback) {
 		bottom : 0,
 		duration : 2000
 	});
-	self.add(label);
+	//self.add(label);
 	self.girlscontainer = Ti.UI.createView({
 		top : '0dp',
 		height : Ti.UI.FILL
@@ -56,19 +94,8 @@ exports.create = function(_callback) {
 		duration : 3000
 	});
 	setTimeout(function() {
-		if (Ti.App.Properties.hasProperty('auth') || true)
-			_callback(self);
-		else {
-			var LoginModule = require('ui/logindialog.widget');
-			self.login = new LoginModule();
-			self.login.show();
-			self.login.addEventListener('success', function() {
-				_callback(self);
-			});
-			self.login.addEventListener('error', function() {
-				self.close();
-			});
-		}
-	}, 2000);
+		_callback(self);
+	}, 5000);
+
 	//	_callback();
 };

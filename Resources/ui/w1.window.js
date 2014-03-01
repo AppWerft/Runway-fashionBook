@@ -1,15 +1,18 @@
 exports.create = function() {
-	require('ui/intro.window').create(function(parent_window) {
+	require('ui/intro.window').create(function(self) {
 		var frame = Ti.UI.createView({
 			backgroundColor : 'black'
 		});
-		parent_window.add(frame);
+		self.add(frame);
+		// adding of menu:
+		
 		require('model/fashionbook').init({
 			onerror : function() {
 				alert('Probleme bei der Datenspiegelung. Bitte App nochmals starten.');
-				parent_window.close();
+				self.close();
 			},
 			onload : function(_allImages) {
+				///////////////////
 				var images_in_touchgallery = [];
 				var total = _allImages.length;
 				for (var i = 0; i < total; i++) {
@@ -18,6 +21,8 @@ exports.create = function() {
 				var touchgallery = Ti.App.TouchGallery.createTouchGallery({
 					images : images_in_touchgallery,
 				});
+				if (Ti.App.Properties.hasProperty('galpos'))
+					touchgallery.setCurrentPage(Ti.App.Properties.getInt('galpos'));
 				frame.add(touchgallery);
 				bottombar = require('ui/bottombar.widget').create();
 				frame.add(bottombar);
@@ -25,20 +30,21 @@ exports.create = function() {
 					text : _allImages[0].agency
 				});
 				setTimeout(function() {
-					parent_window.locked = false;
+					self.locked = false;
 				}, 200);
 				touchgallery.addEventListener('scroll', function(_e) {
 					bottombar.fireEvent('setText', {
 						text : _allImages[_e.currentPage].agency
 					});
+					Ti.App.Properties.setInt('galpos', _e.currentPage);
 					var modus = (_allImages[_e.currentPage].photoratio > 1) ? Ti.UI.PORTRAIT : Ti.UI.LANDSCAPE;
-					parent_window.setOrientationModes([modus]);
+					self.setOrientationModes([modus]);
 				});
 				touchgallery.addEventListener('singletap', function(_e) {
 					// bug in docu!  ulr is index
 					require('ui/dialog.widget').create(_allImages[_e.url]);
 				});
-				parent_window.activity.onPrepareOptionsMenu = function() {
+				self.activity.onPrepareOptionsMenu = function() {
 					require('ui/dialog.widget').create(_allImages[touchgallery.currentPage]);
 
 				};
@@ -47,9 +53,12 @@ exports.create = function() {
 				}).show();
 			}
 		});
+		
+		
+		
 		/* Terminating of App after BackButton clicking */
-		parent_window.addEventListener('androidback', function() {
-			if (parent_window.locked == true)
+		self.addEventListener('androidback', function() {
+			if (self.locked == true)
 				return false;
 			var dialog = Ti.UI.createAlertDialog({
 				cancel : 1,
@@ -61,9 +70,14 @@ exports.create = function() {
 				if (e.index === e.source.cancel) {
 					return false;
 				} else {
-					parent_window.close();
-					Ti.Android.currentActivity.finish();
-					require('bencoding.android.tools').createPlatform().exitApp();
+					Ti.Android && Ti.UI.createNotification({
+						message : 'FashionBook finished'
+					}).show();
+					self.close();
+					setTimeout(function() {
+						Ti.Android.currentActivity.finish();
+						require('bencoding.android.tools').createPlatform().exitApp();
+					}, 1000);
 					return true;
 				}
 			});

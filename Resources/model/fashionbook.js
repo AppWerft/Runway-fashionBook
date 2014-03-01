@@ -36,7 +36,7 @@ exports.init = function(_args) {
 				try {
 					var data = {
 						city : (cats.city[image.city]) ? cats.city[image.city] : image.city,
-						season : image.season,
+						season : cats.season[image.season],
 						type : (cats.type[image.type]) ? cats.type[image.type] : image.type,
 						artist : image.artist,
 						agency : (cats.artist[image.artist]) ? cats.artist[image.artist].name : image.artist,

@@ -1,11 +1,29 @@
-exports.create = function(_key, _value) {
+exports.create = function(_key, _value, _season) {
 	var TiTouchGallery = require('ui/gallerylistview.widget');
+	var abextras = require('com.alcoapps.actionbarextras');
 	var self = Titanium.UI.createWindow({
 		fullscreen : true,
-		navBarHidden : true,
+		navBarHidden : false,
 		backgroundColor : 'black',
 		orientationModes : [Titanium.UI.PORTRAIT]
 	});
+
+	if (Ti.Android) {
+		self.addEventListener('open', function() {
+			var activity = self.getActivity();
+			var actionBar = activity.actionBar;
+			if (actionBar) {
+				abextras.setExtras({
+					title : _season,
+					subtitle : _value
+				});
+				actionBar.displayHomeAsUp = true;
+				activity.onCreateOptionsMenu = function(e) {
+
+				};
+			}
+		});
+	}
 	self.container = Ti.UI.createView({
 		layout : 'horizontal'
 	});

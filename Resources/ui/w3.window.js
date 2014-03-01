@@ -5,7 +5,7 @@ exports.create = function(_options) {
 	});
 	var self = Titanium.UI.createWindow({
 		fullscreen : true,
-		navBarHidden : true,
+		navBarHidden : false,
 		backgroundColor : 'black'
 	});
 	self.container = Ti.UI.createView();

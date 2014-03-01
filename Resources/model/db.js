@@ -15,6 +15,7 @@ exports.cats = {
 		B : 'Berlin'
 	},
 	season : {
+		"27" : "Winter 2014/15",
 		"26" : "Summer 2014",
 		"25" : "Winter 2013/14",
 		"24" : 'Summer 2013',
