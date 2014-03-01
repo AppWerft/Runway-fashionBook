@@ -68,7 +68,7 @@ exports.create = function() {
 			});
 			dialog.addEventListener('click', function(e) {
 				if (e.index === e.source.cancel) {
-					return false;
+					return false; 
 				} else {
 					Ti.Android && Ti.UI.createNotification({
 						message : 'FashionBook finished'
